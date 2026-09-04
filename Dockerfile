@@ -1,8 +1,13 @@
 FROM node:16.17.0-alpine as builder
+
+# Install build dependencies
+RUN apk add --no-cache python3 make g++
+
 WORKDIR /app
 COPY ./package.json .
 COPY ./yarn.lock .
-RUN yarn install
+RUN yarn install --build-from-source
+
 COPY . .
 ARG TMDB_V3_API_KEY
 ENV VITE_APP_TMDB_V3_API_KEY=${TMDB_V3_API_KEY}
