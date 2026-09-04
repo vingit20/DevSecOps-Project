@@ -1,9 +1,10 @@
-FROM node:16.17.0-alpine as builder
+FROM node:18-alpine as builder
+
+WORKDIR /app
 
 # Install build dependencies
 RUN apk add --no-cache python3 make g++
 
-WORKDIR /app
 COPY ./package.json .
 COPY ./yarn.lock .
 RUN yarn install --build-from-source
